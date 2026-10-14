@@ -27,16 +27,21 @@ Many curves that have equal input parameters DO NOT overlap, which causes a disp
 ```
 The diagrams below depict the current options in the Ubertool web application (grayed) with the recommended options in the 2012 OPP memorandum (underlined). Blocks that are underlined in orange and are NOT grayed out will be added to the Ubertool AgDRIFT web application.
 ```
-![](C:\Users\ckuan\git\agdriftR\AgDrift_selectableproperties_01042016\Slide1.jpg)
-![](C:\Users\ckuan\git\agdriftR\AgDrift_selectableproperties_01042016\Slide2.jpg)
+![](AgDrift_selectableproperties_01042016/Slide1.JPG)
+![](AgDrift_selectableproperties_01042016/Slide2.JPG)
   
 ```{r Data Sources, eval=TRUE, echo=FALSE, include=FALSE}
-library(xlsx)
+library(readxl)
 library(rmarkdown)
 
-#carmen
-if(Sys.info()[4]=="DZ2626UCKUAN"){
-  cdf.path <- "C://Users//ckuan//git//agdriftR//"
+# Paths are relative to the repo root. Run from there (or set cdf.path first).
+if (!exists("cdf.path")) cdf.path <- "./"
+
+# readxl-based stand-in for xlsx::read.xlsx (avoids the Java dependency)
+read.xlsx <- function(file, sheetName, startRow = 1, header = TRUE) {
+  d <- as.data.frame(read_excel(file, sheet = sheetName, skip = startRow - 1, col_names = header))
+  names(d) <- make.names(names(d), unique = TRUE)
+  d
 }
 
 # AGDRIFT DATA (FORTRAN2PY)

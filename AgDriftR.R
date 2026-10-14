@@ -1,16 +1,14 @@
-library(xlsx)
+library(readxl)
 library(rmarkdown)
 
-#carmen
-if(Sys.info()[4]=="DZ2626UCKUAN"){
-  cdf.path <- "C://Users//ckuan//git//agdriftR//"
-}
-if(Sys.info()[4]=="Ashleys-MacBook-Pro-2.local"){
-  cdf.path <- "~/git/agdriftR/"
-}
-#tom
-if(Sys.info()[4]=="stp-air-3.local" || Sys.info()[4]=="stp-air.local" || Sys.info()[4]=="stp-air"){
-  cdf.path <- "~/git/agdriftR/"
+# Paths are relative to the repo root. Run from there (or set cdf.path first).
+if (!exists("cdf.path")) cdf.path <- "./"
+
+# readxl-based stand-in for xlsx::read.xlsx (avoids the Java dependency)
+read.xlsx <- function(file, sheetName, startRow = 1, header = TRUE) {
+  d <- as.data.frame(read_excel(file, sheet = sheetName, skip = startRow - 1, col_names = header))
+  names(d) <- make.names(names(d), unique = TRUE)
+  d
 }
 
 # AGDRIFT DATA (FORTRAN2PY)
@@ -116,19 +114,19 @@ plot(df_aerial_excel$Distance..ft., df_aerial_excel$Fine.to.Med, main = "f2m", t
 lines(df_fortran2py$distance_ft, df_fortran2py$Aerial.f2m, lty=2, col = "green3")
 lines(df_model_aerial$Distance_ft, df_model_aerial$f2m_dep, lty=3, col = "red")
 lines(df_model_aerial$Distance_ft, df_model_aerial$f2m_ponddep, lty=4, col = "purple")
-legend("topright", c(, "Peck", "EXPRESS", "GUI Dep", "GUI Ponddep"), col = c("black", "green3", "red", "purple"), lty = c(1, 2, 3, 4), bg = "gray90", cex=1)
+legend("topright", c("Peck", "EXPRESS", "GUI Dep", "GUI Ponddep"), col = c("black", "green3", "red", "purple"), lty = c(1, 2, 3, 4), bg = "gray90", cex=1)
 ## Medium to coarse
 plot(df_aerial_excel$Distance..ft., df_aerial_excel$Med.to.Coarse, type = "l", main = "m2c", xlab = "Distance (ft)", ylab = "Fraction of Deposition",xlim=c(0,300), ylim=c(0, 0.55))
 lines(df_fortran2py$distance_ft, df_fortran2py$Aerial.m2c, lty=2, col = "green3")
 lines(df_model_aerial$Distance_ft, df_model_aerial$m2c_dep, lty=3, col= "red")
 lines(df_model_aerial$Distance_ft, df_model_aerial$m2c_ponddep, lty=4, col = "purple")
-legend("topright", c(, "Peck", "EXPRESS", "GUI Dep", "GUI Ponddep"), col = c("black","green3", "red", "purple"), lty = c(1, 2, 3, 4), bg = "gray90", cex=1)
+legend("topright", c("Peck", "EXPRESS", "GUI Dep", "GUI Ponddep"), col = c("black","green3", "red", "purple"), lty = c(1, 2, 3, 4), bg = "gray90", cex=1)
 ## Coarse to very coarse
 plot(df_aerial_excel$Distance..ft., df_aerial_excel$Coarse.to.VC, type = "l", main = "c2vc", xlab = "Distance (ft)", ylab = "Fraction of Deposition",xlim=c(0,300), ylim=c(0, 0.55))
 lines(df_fortran2py$distance_ft, df_fortran2py$aerial.c2vc, lty = 3, col="green3")
 lines(df_model_aerial$Distance_ft, df_model_aerial$c2vc_dep, lty=4, col = "red")
 lines(df_model_aerial$Distance_ft, df_model_aerial$c2vc_ponddep, lty=5, col ="purple")
-legend("topright", c(, "Peck", "EXPRESS", "GUI Dep", "GUI Ponddep"), col = c("black","green3", "red", "purple"), lty = c(1, 2, 3,4), bg = "gray90", cex=1)
+legend("topright", c("Peck", "EXPRESS", "GUI Dep", "GUI Ponddep"), col = c("black","green3", "red", "purple"), lty = c(1, 2, 3,4), bg = "gray90", cex=1)
 
 # Ground
 ## Low- very fine to fine
