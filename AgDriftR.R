@@ -197,7 +197,7 @@ lines(df_airblast_calc$distance_ft, df_airblast_calc$airblast_normal_outside, co
 lines(df_airblast_calc$distance_ft, df_airblast_calc$airblast_normal_inside, col = "green3", lty=2)
 lines(df_model_airblast$Distance_ft, df_model_airblast$normal_dep, col = "red", lty = 3)
 lines(df_model_airblast$Distance_ft, df_model_airblast$normal_ponddep, col = "purple", lty = 4)
-legend("topright", c("Peck", "Calc Outside", "Calc Inside", "GUI", "GUI Ponddep"), col = c("black", "blue", "green3", "red", "purple"), lty = c(1, 2, 2,3,4), bg = "gray90", cex = 1)
+legend("topright", c("Peck", "Calc Outside", "Calc Inside", "GUI Dep", "GUI Ponddep"), col = c("black", "blue", "green3", "red", "purple"), lty = c(1, 2, 2,3,4), bg = "gray90", cex = 1)
 ## Sparse
 plot(df_airblast_excel$Distance..ft., df_airblast_excel$Sparse, main = "Sparse", type = "l", xlab = "Distance (ft)", ylab = "Fraction of Deposition", xlim=c(0,300))
 lines(df_airblast_calc$distance_ft, df_airblast_calc$airblast_sparse_outside, col="blue", lty=2)
